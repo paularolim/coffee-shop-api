@@ -23,6 +23,7 @@
     "import/extensions": ["error", { "ts": "never" }],
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "object-curly-newline": "off"
   }
 }
