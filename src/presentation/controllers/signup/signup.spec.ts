@@ -1,9 +1,7 @@
 /* eslint-disable max-classes-per-file */
-import { AccountModel } from '../../domain/models/account';
-import { AddAccount, AddAccountModel } from '../../domain/usecases/add-account';
-import { InvalidParamError, MissingParamError, ServerError } from '../errors';
-import { EmailValidator } from '../protocols';
+import { InvalidParamError, MissingParamError, ServerError } from '../../errors';
 import { SignUpController } from './signup';
+import { EmailValidator, AccountModel, AddAccount, AddAccountModel } from './signup-protocols';
 
 interface SutTypes {
   sut: SignUpController;
@@ -42,7 +40,9 @@ const makeSut = (): SutTypes => {
   const addAccountStub = makeAddAccountStub();
   const sut = new SignUpController(emailValidatorStub, addAccountStub);
   return {
-    sut, emailValidatorStub, addAccountStub,
+    sut,
+    emailValidatorStub,
+    addAccountStub,
   };
 };
 
