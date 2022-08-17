@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 import { Encrypter } from '../../protocols/encrypter';
 import { DbAddAccount } from './db-add-account';
 
@@ -10,7 +11,6 @@ const makeEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {
     // eslint-disable-next-line no-unused-vars
     async encrypt(value: string): Promise<string> {
-      // eslint-disable-next-line no-promise-executor-return
       return new Promise((resolve) => resolve('hashed_password'));
     }
   }
@@ -37,5 +37,22 @@ describe('DbAddAccount Usecase', () => {
     await sut.add(accountData);
 
     expect(encryptSpy).toHaveBeenCalledWith('valid_password');
+  });
+
+  it('should throw if Encrypter throws', async () => {
+    const { sut, encrypterStub } = makeSut();
+
+    jest
+      .spyOn(encrypterStub, 'encrypt')
+      .mockReturnValueOnce(new Promise((_, reject) => reject(new Error())));
+
+    const accountData = {
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'valid_password',
+    };
+    const promise = sut.add(accountData);
+
+    await expect(promise).rejects.toThrow();
   });
 });
