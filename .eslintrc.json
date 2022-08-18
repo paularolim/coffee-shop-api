@@ -24,6 +24,7 @@
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
     "no-restricted-syntax": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "no-promise-executor-return": "off"
   }
 }

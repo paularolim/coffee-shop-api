@@ -1,4 +1,3 @@
-/* eslint-disable no-promise-executor-return */
 import { Encrypter } from '../../protocols/encrypter';
 import { DbAddAccount } from './db-add-account';
 

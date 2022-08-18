@@ -30,7 +30,6 @@ const makeAddAccountStub = (): AddAccount => {
         password: account.password,
       };
 
-      // eslint-disable-next-line no-promise-executor-return
       return new Promise((resolve) => resolve(fakeAccount));
     }
   }
@@ -178,7 +177,6 @@ describe('SignUp Controller', () => {
     const { sut, addAccountStub } = makeSut();
     jest
       .spyOn(addAccountStub, 'add')
-      // eslint-disable-next-line no-promise-executor-return
       .mockImplementationOnce(() => new Promise((_, reject) => reject(new Error())));
 
     const httpRequest = {
