@@ -1,5 +1,11 @@
+import { MySQLHelper } from '../infra/database/my-sql/helpers/my-sql-helper';
 import { app } from './config/app';
+import env from './config/env';
 
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
-});
+MySQLHelper.connect()
+  .then(() => {
+    app.listen(env.port, () => {
+      console.log(`Server running on port ${env.port}`);
+    });
+  })
+  .catch(console.error);
