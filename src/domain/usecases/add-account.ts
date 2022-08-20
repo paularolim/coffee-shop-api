@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { AccountModel } from '../models/account';
 
 export interface AddAccountModel {
@@ -8,5 +7,5 @@ export interface AddAccountModel {
 }
 
 export interface AddAccount {
-  add(account: AddAccountModel): Promise<AccountModel>;
+  add(account: AddAccountModel): Promise<AccountModel | null>;
 }

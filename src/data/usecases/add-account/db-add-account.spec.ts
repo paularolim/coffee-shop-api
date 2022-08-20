@@ -8,7 +8,6 @@ interface SutTypes {
 
 const makeEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {
-    // eslint-disable-next-line no-unused-vars
     async encrypt(value: string): Promise<string> {
       return new Promise((resolve) => resolve('hashed_password'));
     }

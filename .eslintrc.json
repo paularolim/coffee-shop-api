@@ -4,7 +4,7 @@
     "es2021": true,
     "jest": true
   },
-  "extends": ["airbnb-base"],
+  "extends": ["airbnb-base", "eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -25,6 +25,7 @@
     "import/prefer-default-export": "off",
     "no-restricted-syntax": "off",
     "object-curly-newline": "off",
-    "no-promise-executor-return": "off"
+    "no-promise-executor-return": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }
