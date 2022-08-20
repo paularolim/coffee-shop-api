@@ -1,9 +1,10 @@
 import { v4 as uuid } from 'uuid';
+import { AddAccountRepository } from '../../../../data/protocols/database/account/add-account-repository';
 import { AccountModel } from '../../../../domain/models/account';
-import { AddAccount, AddAccountModel } from '../../../../domain/usecases/add-account';
+import { AddAccountModel } from '../../../../domain/usecases/add-account';
 import { MySQLHelper } from '../helpers/my-sql-helper';
 
-export class AccountMySQLRepository implements AddAccount {
+export class AccountMySQLRepository implements AddAccountRepository {
   async add(account: AddAccountModel): Promise<AccountModel | null> {
     const id = uuid();
 
