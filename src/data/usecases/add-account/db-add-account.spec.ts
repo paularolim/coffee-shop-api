@@ -1,3 +1,7 @@
+/* eslint-disable max-classes-per-file */
+import { AccountModel } from '../../../domain/models/account';
+import { AddAccountModel } from '../../../domain/usecases/add-account';
+import { AddAccountRepository } from '../../protocols/database/account/add-account-repository';
 import { Encrypter } from '../../protocols/encrypter';
 import { DbAddAccount } from './db-add-account';
 
@@ -17,8 +21,15 @@ const makeEncrypter = (): Encrypter => {
 };
 
 const makeSut = (): SutTypes => {
+  class AddAccountRepositorySpy implements AddAccountRepository {
+    async add({ email, name, password }: AddAccountModel): Promise<AccountModel | null> {
+      return new Promise((resolve) => resolve({ id: 'any_id', name, email, password }));
+    }
+  }
+
   const encrypterStub = makeEncrypter();
-  const sut = new DbAddAccount(encrypterStub);
+  const addAccountRepositorySpy = new AddAccountRepositorySpy();
+  const sut = new DbAddAccount(encrypterStub, addAccountRepositorySpy);
 
   return { sut, encrypterStub };
 };
