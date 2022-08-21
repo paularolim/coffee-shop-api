@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { InvalidParamError, MissingParamError } from '../../errors';
-import { badRequest, serverError } from '../../helpers/http-helper';
+import { badRequest, serverError, unauthorized } from '../../helpers/http-helper';
 import { LoginController } from './login';
 import { EmailValidator } from '../../protocols/email-validator';
 import { HttpRequest } from '../../protocols';
@@ -118,5 +118,17 @@ describe('LoginController', () => {
     await sut.handle(makeFakeHttpRequest());
 
     expect(authSpy).toHaveBeenCalledWith('any_email', 'any_password');
+  });
+
+  it('should return 401 if invalid credentials are provided', async () => {
+    const { sut, authenticationStub } = makeSut();
+
+    jest
+      .spyOn(authenticationStub, 'auth')
+      .mockReturnValueOnce(new Promise((resolve) => resolve(null)));
+
+    const httpResponse = await sut.handle(makeFakeHttpRequest());
+
+    expect(httpResponse).toEqual(unauthorized());
   });
 });
