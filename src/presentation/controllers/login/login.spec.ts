@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { InvalidParamError, MissingParamError } from '../../errors';
-import { badRequest, serverError, unauthorized } from '../../helpers/http-helper';
+import { badRequest, ok, serverError, unauthorized } from '../../helpers/http-helper';
 import { LoginController } from './login';
 import { Authentication, EmailValidator, HttpRequest } from './login-protocols';
 
@@ -140,5 +140,13 @@ describe('LoginController', () => {
     const httpResponse = await sut.handle(makeFakeHttpRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
+  });
+
+  it('should return 200 if valid credentials is provided', async () => {
+    const { sut } = makeSut();
+
+    const httpResponse = await sut.handle(makeFakeHttpRequest());
+
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }));
   });
 });
