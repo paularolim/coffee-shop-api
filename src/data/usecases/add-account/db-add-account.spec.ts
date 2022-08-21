@@ -5,6 +5,19 @@ import { AddAccountRepository } from '../../protocols/database/account/add-accou
 import { Encrypter } from '../../protocols/encrypter';
 import { DbAddAccount } from './db-add-account';
 
+const makeFakeAccount = (): AccountModel => ({
+  id: 'any_id',
+  name: 'any_name',
+  email: 'any_email',
+  password: 'any_password',
+});
+
+const makeFakeAccountData = (): AddAccountModel => ({
+  name: 'any_name',
+  email: 'any_email',
+  password: 'any_password',
+});
+
 interface SutTypes {
   sut: DbAddAccount;
   encrypterStub: Encrypter;
@@ -22,8 +35,8 @@ const makeEncrypter = (): Encrypter => {
 
 const makeSut = (): SutTypes => {
   class AddAccountRepositorySpy implements AddAccountRepository {
-    async add({ email, name, password }: AddAccountModel): Promise<AccountModel | null> {
-      return new Promise((resolve) => resolve({ id: 'any_id', name, email, password }));
+    async add(data: AddAccountModel): Promise<AccountModel | null> {
+      return new Promise((resolve) => resolve(makeFakeAccount()));
     }
   }
 
@@ -38,14 +51,9 @@ describe('DbAddAccount Usecase', () => {
   it('should call Encrypter with correct password', async () => {
     const { sut, encrypterStub } = makeSut();
     const encryptSpy = jest.spyOn(encrypterStub, 'encrypt');
-    const accountData = {
-      name: 'valid_name',
-      email: 'valid_email',
-      password: 'valid_password',
-    };
-    await sut.add(accountData);
+    await sut.add(makeFakeAccountData());
 
-    expect(encryptSpy).toHaveBeenCalledWith('valid_password');
+    expect(encryptSpy).toHaveBeenCalledWith('any_password');
   });
 
   it('should throw if Encrypter throws', async () => {
@@ -55,12 +63,7 @@ describe('DbAddAccount Usecase', () => {
       .spyOn(encrypterStub, 'encrypt')
       .mockReturnValueOnce(new Promise((_, reject) => reject(new Error())));
 
-    const accountData = {
-      name: 'valid_name',
-      email: 'valid_email',
-      password: 'valid_password',
-    };
-    const promise = sut.add(accountData);
+    const promise = sut.add(makeFakeAccountData());
 
     await expect(promise).rejects.toThrow();
   });
