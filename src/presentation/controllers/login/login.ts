@@ -6,6 +6,7 @@ import {
   Controller,
   HttpRequest,
   HttpResponse,
+  Validation,
 } from './login-protocols';
 
 export class LoginController implements Controller {
@@ -13,13 +14,21 @@ export class LoginController implements Controller {
 
   private readonly authentication: Authentication;
 
-  constructor(emailValidator: EmailValidator, authentication: Authentication) {
+  private readonly validation: Validation;
+
+  constructor(
+    emailValidator: EmailValidator,
+    authentication: Authentication,
+    validation: Validation,
+  ) {
     this.emailValidator = emailValidator;
     this.authentication = authentication;
+    this.validation = validation;
   }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     const requiredFields = ['email', 'password'];
+    this.validation.validate(httpRequest.body);
     for (const field of requiredFields) {
       if (!httpRequest?.body?.[field]) {
         return badRequest(new MissingParamError(field));
