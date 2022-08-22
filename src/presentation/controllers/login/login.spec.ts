@@ -173,4 +173,16 @@ describe('LoginController', () => {
 
     expect(validateSpy).toHaveBeenCalledWith(httpRequest.body);
   });
+
+  it('should return 400 if Validation returns and error', async () => {
+    const { sut, validationStub } = makeSut();
+
+    jest
+      .spyOn(validationStub, 'validate')
+      .mockImplementationOnce(() => new MissingParamError('any_field'));
+
+    const httpResponse = await sut.handle(makeFakeHttpRequest());
+
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('any_field')));
+  });
 });
