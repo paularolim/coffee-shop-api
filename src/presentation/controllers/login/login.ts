@@ -28,7 +28,11 @@ export class LoginController implements Controller {
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     const requiredFields = ['email', 'password'];
-    this.validation.validate(httpRequest.body);
+    const validationError = this.validation.validate(httpRequest.body);
+    if (validationError) {
+      return badRequest(validationError);
+    }
+
     for (const field of requiredFields) {
       if (!httpRequest?.body?.[field]) {
         return badRequest(new MissingParamError(field));
