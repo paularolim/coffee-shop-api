@@ -5,6 +5,7 @@ import {
   HttpRequest,
   HttpResponse,
   Validation,
+  AuthenticationModel,
 } from './login-protocols';
 
 export class LoginController implements Controller {
@@ -24,10 +25,10 @@ export class LoginController implements Controller {
         return badRequest(validationError);
       }
 
-      const accessToken = await this.authentication.auth(
-        httpRequest?.body?.email,
-        httpRequest?.body?.password,
-      );
+      const accessToken = await this.authentication.auth({
+        email: httpRequest?.body?.email,
+        password: httpRequest?.body?.password,
+      });
       if (!accessToken) {
         return unauthorized();
       }
