@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { MissingParamError } from '../../errors';
 import { ValidationComposite } from './validation-composite';
-import { Validation } from './validaton';
+import { Validation } from '../../protocols/validation';
 
 const makeValidation = () => {
   class ValidationStub implements Validation {
