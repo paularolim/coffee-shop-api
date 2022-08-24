@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { InvalidParamError, MissingParamError, ServerError } from '../../errors';
-import { badRequest, ok, serverError } from '../../helpers/http-helper';
+import { badRequest, ok, serverError } from '../../helpers/http/http-helper';
 import { Validation } from '../login/login-protocols';
 import { SignUpController } from './signup';
 import { AccountModel, AddAccount, AddAccountModel, HttpRequest } from './signup-protocols';
