@@ -3,13 +3,7 @@ import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { badRequest, ok, serverError } from '../../helpers/http-helper';
 import { Validation } from '../login/login-protocols';
 import { SignUpController } from './signup';
-import {
-  EmailValidator,
-  AccountModel,
-  AddAccount,
-  AddAccountModel,
-  HttpRequest,
-} from './signup-protocols';
+import { AccountModel, AddAccount, AddAccountModel, HttpRequest } from './signup-protocols';
 
 const makeFakeHttpRequest = (): HttpRequest => ({
   body: {
@@ -28,21 +22,9 @@ const makeFakeAccount = (): AccountModel => ({
 
 interface SutTypes {
   sut: SignUpController;
-  emailValidatorStub: EmailValidator;
   addAccountStub: AddAccount;
   validationStub: Validation;
 }
-
-const makeEmailValidator = (): EmailValidator => {
-  class EmailValidatorStub implements EmailValidator {
-    // eslint-disable-next-line no-unused-vars
-    isValid(email: string): boolean {
-      return true;
-    }
-  }
-
-  return new EmailValidatorStub();
-};
 
 const makeValidaton = (): Validation => {
   class ValidatonStub implements Validation {
@@ -65,13 +47,11 @@ const makeAddAccountStub = (): AddAccount => {
 };
 
 const makeSut = (): SutTypes => {
-  const emailValidatorStub = makeEmailValidator();
   const addAccountStub = makeAddAccountStub();
   const validationStub = makeValidaton();
-  const sut = new SignUpController(emailValidatorStub, addAccountStub, validationStub);
+  const sut = new SignUpController(addAccountStub, validationStub);
   return {
     sut,
-    emailValidatorStub,
     addAccountStub,
     validationStub,
   };
