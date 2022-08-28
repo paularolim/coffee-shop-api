@@ -23,6 +23,7 @@ const makeFakeAccount = (): AccountModel => ({
   name: 'any_name',
   email: 'any_email',
   password: 'any_password',
+  phone: 'any_phone',
 });
 
 interface SutTypes {

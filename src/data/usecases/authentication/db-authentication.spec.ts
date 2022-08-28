@@ -18,6 +18,7 @@ const makeFakeAccount = (): AccountModel => ({
   email: 'any_email',
   name: 'any_name',
   password: 'hashed_pass',
+  phone: 'any_phone',
 });
 
 const makeFakeAuthentication = (): AuthenticationModel => ({

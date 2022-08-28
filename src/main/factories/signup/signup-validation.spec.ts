@@ -24,7 +24,7 @@ describe('SignUp Validation', () => {
   it('should call ValidationComposite with all validations', () => {
     makeSignUpValidation();
     const validations: Validation[] = [];
-    for (const field of ['name', 'email', 'password']) {
+    for (const field of ['name', 'email', 'password', 'phone']) {
       validations.push(new RequiredFieldsValidation(field));
     }
     validations.push(new EmailValidation('email', makeEmailValidator()));
