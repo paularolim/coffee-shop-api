@@ -3,7 +3,7 @@ import request from 'supertest';
 import { MySQLHelper } from '../../infra/database/my-sql/helpers/my-sql-helper';
 import { app } from '../config/app';
 
-describe('SignUp Routes', () => {
+describe('Login Routes', () => {
   beforeAll(async () => {
     await MySQLHelper.connect();
   });
@@ -16,14 +16,16 @@ describe('SignUp Routes', () => {
     await MySQLHelper.connection('users').delete();
   });
 
-  it('should return an account on success', async () => {
-    await request(app)
-      .post('/api/signup')
-      .send({
-        name: faker.name.fullName(),
-        email: faker.internet.email(),
-        password: faker.internet.password(8),
-      })
-      .expect(200);
+  describe('POST /signup', () => {
+    it('should return 200 on signup', async () => {
+      await request(app)
+        .post('/api/signup')
+        .send({
+          name: faker.name.fullName(),
+          email: faker.internet.email(),
+          password: faker.internet.password(8),
+        })
+        .expect(200);
+    });
   });
 });
