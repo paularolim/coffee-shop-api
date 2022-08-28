@@ -49,4 +49,11 @@ describe('Account MySQL repository', () => {
     expect(account?.email).toBe('any_email');
     expect(account?.password).toBe('any_password');
   });
+
+  it('should return null on load fails', async () => {
+    const sut = new AccountMySQLRepository();
+
+    const account = await sut.loadByEmail('any_email');
+    expect(account).toBeFalsy();
+  });
 });
