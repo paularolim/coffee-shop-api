@@ -6,13 +6,14 @@ import { LogErrorMySQLRepository } from '../../../infra/database/my-sql/log-erro
 import { LoginController } from '../../../presentation/controllers/login/login';
 import { LogControllerDecorator } from '../../decorators/log';
 import { makeLoginValidation } from './login-factory-validation';
+import env from '../../config/env';
 
 export const makeLoginController = () => {
   const salt = 12;
 
   const repository = new AccountMySQLRepository();
   const bcryptAdapter = new BcryptAdapter(salt);
-  const jwtAdapter = new JwtAdapter('');
+  const jwtAdapter = new JwtAdapter(env.jwtSecret);
 
   const dbAuthentication = new DbAuthentication(repository, bcryptAdapter, jwtAdapter);
   const loginController = new LoginController(dbAuthentication, makeLoginValidation());
