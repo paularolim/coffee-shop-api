@@ -28,4 +28,26 @@ describe('Login Routes', () => {
         .expect(200);
     });
   });
+
+  describe('POST /login', () => {
+    it('should return 200 on login', async () => {
+      const fakeAccount = {
+        name: faker.name.fullName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(8),
+      };
+
+      await request(app).post('/api/signup').send(fakeAccount);
+
+      // await MySQLHelper.connection.insert(fakeAccount).into('users');
+
+      await request(app)
+        .post('/api/login')
+        .send({
+          email: fakeAccount.email,
+          password: fakeAccount.password,
+        })
+        .expect(200);
+    });
+  });
 });
