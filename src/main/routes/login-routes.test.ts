@@ -39,8 +39,6 @@ describe('Login Routes', () => {
 
       await request(app).post('/api/signup').send(fakeAccount);
 
-      // await MySQLHelper.connection.insert(fakeAccount).into('users');
-
       await request(app)
         .post('/api/login')
         .send({
@@ -48,6 +46,16 @@ describe('Login Routes', () => {
           password: fakeAccount.password,
         })
         .expect(200);
+    });
+
+    it('should return 401 on login', async () => {
+      await request(app)
+        .post('/api/login')
+        .send({
+          email: faker.internet.email(),
+          password: faker.internet.password(8),
+        })
+        .expect(401);
     });
   });
 });
