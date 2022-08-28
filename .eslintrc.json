@@ -26,6 +26,7 @@
     "no-restricted-syntax": "off",
     "object-curly-newline": "off",
     "no-promise-executor-return": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "no-useless-constructor": "off"
   }
 }
