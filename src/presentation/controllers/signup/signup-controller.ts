@@ -16,6 +16,7 @@ export class SignUpController implements Controller {
         name: httpRequest?.body?.name,
         email: httpRequest?.body?.email,
         password: httpRequest?.body?.password,
+        phone: httpRequest?.body?.phone,
       });
 
       return ok(account);
