@@ -24,7 +24,7 @@ describe('Login Routes', () => {
           name: faker.name.fullName(),
           email: faker.internet.email(),
           password: faker.internet.password(8),
-          phone: faker.phone.number('###########'),
+          phone: faker.phone.number('11945555555'),
         })
         .expect(200);
     });
@@ -36,7 +36,7 @@ describe('Login Routes', () => {
         name: faker.name.fullName(),
         email: faker.internet.email(),
         password: faker.internet.password(8),
-        phone: faker.phone.number('###########'),
+        phone: faker.phone.number('11945555555'),
       };
 
       await request(app).post('/api/signup').send(fakeAccount);
