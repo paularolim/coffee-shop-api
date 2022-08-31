@@ -9,7 +9,10 @@ export class PhoneValidation implements Validation {
   ) {}
 
   validate(input: any): Error | null {
-    this.phoneValidator.isValid(input[this.fieldName]);
-    return new InvalidParamError(this.fieldName);
+    const isValid = this.phoneValidator.isValid(input[this.fieldName]);
+    if (!isValid) {
+      return new InvalidParamError(this.fieldName);
+    }
+    return null;
   }
 }
