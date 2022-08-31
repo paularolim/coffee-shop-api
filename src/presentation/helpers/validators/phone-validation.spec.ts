@@ -32,4 +32,13 @@ describe('PhoneValidation', () => {
 
     expect(error).toEqual(new InvalidParamError('phone'));
   });
+
+  it('should call PhoneValidator with correct phone', () => {
+    const { sut, phoneValidatorStub } = makeSut();
+    const isValid = jest.spyOn(phoneValidatorStub, 'isValid').mockReturnValueOnce(false);
+
+    sut.validate({ phone: 'any_phone' });
+
+    expect(isValid).toHaveBeenCalledWith('any_phone');
+  });
 });
