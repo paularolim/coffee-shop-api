@@ -50,4 +50,13 @@ describe('PhoneValidation', () => {
 
     expect(isValid).toHaveBeenCalledWith('any_phone');
   });
+
+  it('should throw if PhoneValidator throws', () => {
+    const { sut, phoneValidatorStub } = makeSut();
+    jest.spyOn(phoneValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error();
+    });
+
+    expect(sut.validate).toThrow();
+  });
 });
