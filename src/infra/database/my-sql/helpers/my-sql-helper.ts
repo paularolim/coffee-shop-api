@@ -1,4 +1,5 @@
 import knex, { Knex } from 'knex';
+import env from './env';
 
 export const MySQLHelper = {
   connection: {} as Knex<any, unknown[]>,
@@ -7,9 +8,9 @@ export const MySQLHelper = {
     this.connection = knex({
       client: 'mysql2',
       connection: {
-        user: 'root',
-        password: 'root123',
-        database: 'coffee_shop',
+        user: env.user,
+        password: env.password,
+        database: env.envName === 'prod' ? env.database : `${env.database}_${env.envName}`,
       },
     });
   },
