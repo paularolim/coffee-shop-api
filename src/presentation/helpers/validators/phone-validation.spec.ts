@@ -10,7 +10,7 @@ interface SutTypes {
 const makePhoneValidator = (): PhoneValidator => {
   class PhoneValidatorStub implements PhoneValidator {
     isValid(phone: string): boolean {
-      return false;
+      return true;
     }
   }
 
@@ -31,6 +31,15 @@ describe('PhoneValidation', () => {
     const error = sut.validate({ phone: 'any_phone' });
 
     expect(error).toEqual(new InvalidParamError('phone'));
+  });
+
+  it('should return null if PhoneValidator returns true', () => {
+    const { sut, phoneValidatorStub } = makeSut();
+    jest.spyOn(phoneValidatorStub, 'isValid');
+
+    const validate = sut.validate({ phone: 'any_phone' });
+
+    expect(validate).toBeNull();
   });
 
   it('should call PhoneValidator with correct phone', () => {
