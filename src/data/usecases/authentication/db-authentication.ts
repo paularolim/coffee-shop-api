@@ -15,7 +15,7 @@ export class DbAuthentication implements Authentication {
     if (account) {
       const isValid = await this.hashComparer.compare(authentication.password, account.password);
       if (isValid) {
-        return this.encrypter.encrypt(account.id);
+        return this.encrypter.encrypt({ id: account.id, name: account.name });
       }
     }
     return null;
