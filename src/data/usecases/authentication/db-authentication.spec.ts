@@ -28,7 +28,7 @@ const makeFakeAuthentication = (): AuthenticationModel => ({
 
 const makeEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {
-    async encrypt(value: string): Promise<string | null> {
+    async encrypt(value: object): Promise<string | null> {
       return 'any_token';
     }
   }
@@ -130,7 +130,7 @@ describe('DbAuthentication usecase', () => {
     const generateSpy = jest.spyOn(encrypterStub, 'encrypt');
 
     await sut.auth(makeFakeAuthentication());
-    expect(generateSpy).toHaveBeenCalledWith('any_id');
+    expect(generateSpy).toHaveBeenCalledWith({ id: 'any_id', name: 'any_name' });
   });
 
   it('should throw if Encrypter throws', async () => {
